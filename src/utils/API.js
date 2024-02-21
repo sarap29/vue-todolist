@@ -9,4 +9,7 @@ const Todo = {
     completeTodo: (id) => request.put(`todos/${id}`, { completed: true })
 }
 
-export { Todo };
+const User = {
+    getUser: (userId) => request.get(`users/${userId}`)
+};
+export { Todo, User };

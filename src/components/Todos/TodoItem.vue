@@ -1,6 +1,6 @@
 <template>
   <div class="todo-item">
-    <p>
+    <p :class="{ 'completed': isCompleted }">
       {{ todo.title | capitalize | readMore(50, '...') }}
       <button @click="$emit('delete-todo', todo.id)" class="del">x</button>
       <button @click="completeTodo" class="complete">Completar</button>
@@ -17,9 +17,16 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      isCompleted: false
+    };
+  },
   methods: {
     completeTodo() {
+      console.log("Se hizo clic en completar para la tarea:", this.todo.id);
       this.$emit('complete-todo', this.todo.id);
+      this.isCompleted = true; // Establecer la tarea como completada visualmente
     }
   }
 };
@@ -49,5 +56,8 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   float: right;
+}
+.completed {
+  text-decoration: line-through; /* Aplicar tachado al texto */
 }
 </style>

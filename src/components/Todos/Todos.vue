@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="todo in todos" v-bind:key="todo.id">
-      <TodoItem v-bind:todo="todo" v-on:delete-todo="$emit('delete-todo', todo.id)"/>
+      <TodoItem v-bind:todo="todo" v-on:delete-todo="$emit('delete-todo', todo.id)"  v-on:complete-todo="$emit('complete-todo', todo.id)"/>
     </div>
     <div class="no-record" v-if="todos && todos.length === 0">No todos yet</div>
   </div>
