@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <AddTodo v-on:add-todo="addTodo" ref="form"/>
-    <Todos v-bind:todos="todos" v-on:delete-todo="deleteTodo"/>
+    <Todos v-bind:todos="todos" v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo"/>
     <FullPageLoader v-bind:isShow="isLoading"/>
   </div>
 </template>
 
+
 <script>
-// @ is an alias to /src
 import Todos from "@/components/Todos/Todos.vue";
 import AddTodo from "@/components/Todos/AddTodo.vue";
 import FullPageLoader from "@/components/FullPageLoader/FullPageLoader.vue";
@@ -45,6 +45,21 @@ export default {
       Todo.deleteTodo(id)
         .then(() => {
           this.todos = this.todos.filter(todo => todo.id !== id);
+          this.isLoading = false;
+        })
+        .catch(() => (this.isLoading = false));
+    },
+    
+    completeTodo(id) {
+      this.isLoading = true;
+      Todo.completeTodo(id)
+        .then(() => {
+          this.todos = this.todos.map(todo => {
+            if (todo.id === id) {
+              todo.completed = true;
+            }
+            return todo;
+          });
           this.isLoading = false;
         })
         .catch(() => (this.isLoading = false));
